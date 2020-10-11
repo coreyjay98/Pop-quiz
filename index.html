@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Coding Quiz</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="pagetop">
+        <button id='highScores' class="exclude">View highscores</button>
+        <p class="timer">Time:</p>
+    </div>
+    <div class="page">
+        <h1>
+            Corey's Coding Quiz
+        </h1>
+        <p class="timeWarning">
+            This quiz is timed so try to complete it as fast as possible!
+        </p>
+        <div>
+            <h2 id="question"></h2>
+        </div>
+        <div id="quizButtons" class="hide">
+         
+            <button class='answer' id="choice1" ></button>
+            <button class='answer' id="choice2" ></button>
+            <button class='answer' id="choice3" ></button>
+            <button class='answer' id="choice4" ></button>
+        
+        </div>
+        <div>
+            <button id="startButton">Start!</button>
+        </div>
+        <div class="resultDiv ">
+            <p class="resultHead">Results!</p>
+                <span id="scoreOut">Score:</span>
+                <br>
+                <label for="Name"></label>
+                <input type="text" id="nameInput" name="Name"></input>
+                <br>
+                <button id='scoreRecord' class="exclude submission">Submit</button>
+                <div>
+                    <button class='hide' id="restartButton">Restart</button>
+                </div>
+            </div>
+    </div>
+  
+    <div id='highScoreDiv' class="">
+        <h1>High Scores!</h1>
+        <ol>
+            <li class="scoreList1"></li>
+            <li class="scoreList2"></li>
+            <li class="scoreList3"></li>
+        </ol>
+    </div>
+</body>
+
+<script src="script.js"></script>
+
+
+</html>
