@@ -12,7 +12,9 @@
 
 <body>
     <div class="pagetop">
+        <!--Button to show high scores page-->
         <button id='highScores' class="exclude">View highscores</button>
+        <!--Quiz timer in top right of page-->
         <p class="timer">Time:</p>
     </div>
     <div class="page">
@@ -25,31 +27,37 @@
         <div>
             <h2 id="question"></h2>
         </div>
+
+        <!--Container for all my Question buttons-->
+
         <div id="quizButtons" class="hide">
-         
-            <button class='answer' id="choice1" ></button>
-            <button class='answer' id="choice2" ></button>
-            <button class='answer' id="choice3" ></button>
-            <button class='answer' id="choice4" ></button>
-        
+
+            <button class='answer' id="choice1"></button>
+            <button class='answer' id="choice2"></button>
+            <button class='answer' id="choice3"></button>
+            <button class='answer' id="choice4"></button>
+
         </div>
+        <!--Button to Start quiz-->
         <div>
             <button id="startButton">Start!</button>
         </div>
+        <!--Div to display results and allow user to sumbit name and see score-->
         <div class="resultDiv ">
             <p class="resultHead">Results!</p>
-                <span id="scoreOut">Score:</span>
-                <br>
-                <label for="Name"></label>
-                <input type="text" id="nameInput" name="Name"></input>
-                <br>
-                <button id='scoreRecord' class="exclude submission">Submit</button>
-                <div>
-                    <button class='hide' id="restartButton">Restart</button>
-                </div>
+            <span id="scoreOut">Score:</span>
+            <br>
+            <label for="Name"></label>
+            <input type="text" id="nameInput" name="Name"></input>
+            <br>
+            <button id='scoreRecord' class="exclude submission">Submit</button>
+            <!--'Hide" Class allows to me to remove the items off the page until the user needs to see them-->
+            <div>
+                <button class='hide' id="restartButton">Restart</button>
             </div>
+        </div>
     </div>
-  
+<!--Div showing users their scores after they submit a name-->
     <div id='highScoreDiv' class="">
         <h1>High Scores!</h1>
         <ol>
