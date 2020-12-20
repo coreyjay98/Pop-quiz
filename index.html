@@ -13,9 +13,13 @@
 <body>
     <div class="pagetop">
         <!--Button to show high scores page-->
-        <button id='highScores' class="exclude">View highscores</button>
+        <button id='highScores' class="exclude">View Recent Scores</button>
+        <br> <br>
+        <button id='highScores' class="clearHighscores exclude">Clear Recent Scores</button>
         <!--Quiz timer in top right of page-->
-        <p class="timer">Time:</p>
+        <div class="timeDiv">
+            <p class="timer">Time:<span class="timeDisplay"></span></p>
+        </div>
     </div>
     <div class="page">
         <h1>
@@ -30,44 +34,35 @@
 
         <!--Container for all my Question buttons-->
 
-        <div id="quizButtons" class="hide">
-
-            <button class='answer' id="choice1"></button>
-            <button class='answer' id="choice2"></button>
-            <button class='answer' id="choice3"></button>
-            <button class='answer' id="choice4"></button>
-
+        <div id="quizButtons" class="">
         </div>
         <!--Button to Start quiz-->
         <div>
-            <button id="startButton">Start!</button>
+            <button class="startButton">Start!</button>
         </div>
         <!--Div to display results and allow user to sumbit name and see score-->
-        <div class="resultDiv ">
+        <div class="resultDiv hide ">
             <p class="resultHead">Results!</p>
-            <span id="scoreOut">Score:</span>
+            <span id="scoreOut"></span>
             <br>
             <label for="Name"></label>
             <input type="text" id="nameInput" name="Name"></input>
             <br>
             <button id='scoreRecord' class="exclude submission">Submit</button>
             <!--'Hide" Class allows to me to remove the items off the page until the user needs to see them-->
-            <div>
-                <button class='hide' id="restartButton">Restart</button>
-            </div>
+        </div>
+        <div>
+            <button class='hide' id="restartButton">Restart</button>
         </div>
     </div>
-<!--Div showing users their scores after they submit a name-->
-    <div id='highScoreDiv' class="">
-        <h1>High Scores!</h1>
-        <ol>
-            <li class="scoreList1"></li>
-            <li class="scoreList2"></li>
-            <li class="scoreList3"></li>
+    <!--Div showing users their scores after they submit a name-->
+    <div id='highScoreDiv' class="hide">
+        <h1>Scores!</h1>
+        <ol class="scoreList">
         </ol>
     </div>
 </body>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="script.js"></script>
 
 

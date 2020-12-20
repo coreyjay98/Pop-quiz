@@ -1,183 +1,169 @@
-//All Vars necessary were created up here
-var startButton = document.querySelector('#startButton')
-var quizButtonContainer = document.querySelector('#quizButtons')
-var questionAsk = document.querySelector('#question')
-var timeWarning = document.querySelector('.timeWarning')
-var resultHead = document.querySelector('.resultHead')
-var resultDiv = document.querySelector('.resultDiv')
-var scoreOut = document.querySelector('#scoreOut')
-var restartButton = document.querySelector('#restartButton')
-var quizArray = Array.from(document.querySelectorAll('.answer'))
-const timeDisplay = document.querySelector('.timer')
+let baseQuestions = [
+  {
+    name: "Question One",
+    question: "What would I use to alter the appearance of my website?",
+    answers: ["HTML", "Java", "Python", "CSS"],
+    correct: "CSS",
+  },
+  {
+    name: "Question Two",
+    question: "What does the R in MERN stand for?",
+    answers: ["Reason", "React", "Revive", "Replay"],
+    correct: "React",
+  },
+  {
+    name: "Question Three",
+    question: "What CSS selector will change the text colour?",
+    answers: ["font", "font-color", "color", "font-style"],
+    correct: "color",
+  },
+  {
+    name: "Question Four",
+    question: "Choose the correct HTML Tag for the largest heading",
+    answers: ["head", "header", "big-head", "h1"],
+    correct: "h1",
+  },
+  {
+    name: "Question Five",
+    question: "In JavaScript what symbol would you use to start an array?",
+    answers: ["{", '"', "[", "(("],
+    correct: "[",
+  },
+];
 
-const choiceOne = document.querySelector('#choice1')
-const choiceTwo = document.querySelector('#choice2')
-const choiceThree = document.querySelector('#choice3')
-const choiceFour = document.querySelector('#choice4')
-// Array for all questions and answers
-var questions = [{
-    question: 'What would I use to alter the appearance of my website?',
-    answers: ['CSS', 'Java', 'Python', 'HTML'],
-    correct: 3
-},
-{
-    question: 'What does the R in MERN stand for?',
-    answers: ['Reason', 'React', 'Revive', 'Replay'],
-    correct: 3
-},
-{
-    question: 'What CSS selector will change the text colour?',
-    answers: ['font', 'font-color', 'color', 'font-style'],
-    correct: 3
-},
-{
-    question: 'Choose the correct HTML for the largest heading',
-    answers: ['<head>', '<header>', '<big-head>', '<h1>'],
-    correct: 3
-},
-{
-    question: 'In JavaScript what symbol would you use to start an array?',
-    answers: ['{', '"', '[', '('],
-    correct: 3
-}
-]
-// Way to manage what question user is seeing
-var questionIndex = 0
-// Simple number VAR that I can increment and use to keep the user's score
-var currentScore = 0
+let questions = [];
 
-// Function for when high scores button is clicked
-$('#highScores').click(function () {
-    var highScoreDiv = $('#highScoreDiv')
-    highScoreDiv.toggle('hide')
-})
-
-// Funsction for the timer, currently incomplete
-var Timer = function () {
-    var secs = 0;
-    var id = setInterval(function () {
-        secs++; $('.timer').text(secs);
-        if (scoreOut.textContent == '') {
-            clearInterval(id);
-            alert('Total Time: ' + secs + ' seconds');
-            console.log(secs)
-        }
-    }, 1000);
+const questionSelector = () => {
+  const i = Math.floor(Math.random() * (questions.length - 1));
+  return questions[i];
 };
 
-// Listener on the start button to start the whole quiz 
+const finishedQuiz = () => {
+  console.log("Finished Quiz");
+  clearInterval(timer);
+  $(".resultDiv").toggleClass("hide");
+  $("#scoreOut").append(`Score: ${answerCount} Time : ${count}`);
+  $("#scoreOut").append("");
+};
+const showQuestions = (obj) => {
+  if (!obj) return finishedQuiz();
+  return `            
+  <h2 id="question">${obj.question}</h2>
+  <button class='answer' id="choice1" data-id='1'>${obj.answers[0]}</button>
+  <button class='answer' id="choice2" data-id='2'>${obj.answers[1]}</button>
+  <br>
+  <button class='answer' id="choice3" data-id='3'>${obj.answers[2]}</button>
+  <button class='answer' id="choice4" data-id='4'>${obj.answers[3]}</button>`;
+};
 
-startButton.addEventListener("click", function () {
-    console.log('Started Quiz');
-    startButton.classList.add('hide')
-    quizButtonContainer.classList.remove('hide')
-    questionAsk.classList.remove('hide')
-    nextQuestion()
-    Timer()
-})
-
-// This function is ran every time a question is answered correctly, gives the next question
-var nextQuestion = function () {
-
-    for (let i = 0; i < 4; i++) {
-        questionAsk.textContent = (questions[questionIndex].question)
-        var button = document.querySelector('.answer')
-        button.textContent = (questions[questionIndex].answers[i])
-        quizButtonContainer.append(button)
-    }
-}
-
-// if statements for if the user gets the question right or wrong 
-
-$('#choice1').click(function () {
-    if (choiceOne.textContent == 'CSS') {
-        console.log('Correct')
-        questionIndex++
-        currentScore++
-        nextQuestion()
+const answerChecker = (answer) => {
+  questions.forEach((el) => {
+    if (answer == el.correct) {
+      rightAnswer(answer);
     } else {
-
+      wrongAnswer();
     }
-})
-$('#choice2').click(function () {
-    if (choiceTwo.textContent == 'React') {
-        console.log('Correct')
-        questionIndex++
-        currentScore++
-        nextQuestion()
+  });
+};
+const wrongAnswer = () => {
+  return (count += 1);
+};
 
-    } else {
+let answerCount = 0;
+const rightAnswer = (answer) => {
+  answerCount += 1;
+  questions.splice(
+    questions.findIndex((el) => el.correct == answer),
+    1
+  );
+  $("#quizButtons").html("");
+  $("#quizButtons").append(showQuestions(questionSelector()));
+};
 
-    }
-})
-$('#choice3').click(function () {
-    if (choiceThree.textContent == 'color') {
-        console.log('Correct')
-        questionIndex++
-        currentScore++
-        nextQuestion()
-    } else {
+$("#highScores").click(function () {
+  const highScoreDiv = $("#highScoreDiv");
+  highScoreDiv.toggleClass("hide");
+});
+let count = 0;
 
-    }
-})
-$('#choice4').click(function () {
-    if (choiceFour.textContent == '<h1>') {
-        console.log('Correct')
-        questionIndex++
-        currentScore++
-        nextQuestion()
-    } else {
+let timer;
+$(".startButton").click(() => {
+  count = 0;
+  startQuiz();
+  timer = setInterval(function () {
+    count += 1;
+    $(".timeDisplay").html("");
+    $(".timeDisplay").append(count);
+  }, 1000);
+});
 
-    }
-})
-$('#choice3').click(function () {
-    if (choiceThree.textContent == '[') {
-        console.log('Correct')
-        questionIndex++
-        currentScore++
-        console.log(currentScore)
-        quizDone()
-    } else {
+$("#quizButtons").on("click", (event) => {
+  const answer = event.target.outerText;
+  answerChecker(answer);
+});
+let scoreArray = [];
 
-    }
-})
+$(".submission").on("click", (event) => {
+  const nameSubmission = $("#nameInput").val();
+  if (nameSubmission == "") {
+    return $("#nameInput").addClass("redBorder");
+  }
+  const score = {
+    name: nameSubmission,
+    answerCount: answerCount,
+    timeCount: count,
+  };
+  scoreArray.push(score);
+  $("#nameInput").val("");
+  localStorage.setItem("Highscore", JSON.stringify(scoreArray));
+  getStorage();
+  restartOption();
+  scoreArray = [];
+});
 
-// Function for when the quiz is finished
+$(document).ready(() => {
+  getStorage();
+});
 
-var quizDone = function () {
-    quizButtonContainer.classList.add('hide')
-    questionAsk.classList.add('hide')
-    timeWarning.classList.add('hide')
-    resultDiv.classList.remove('hide')
-    scoreOut.append(currentScore)
-    restartButton.classList.remove('hide')
-}
+const getStorage = () => {
+  let score = JSON.parse(localStorage.getItem("Highscore"));
+  if (!score) return $(".scoreList").html("");
+  const sortedScores = score.sort((a, b) => a - b);
+  sortedScores.forEach((el) => {
+    $(".scoreList").append(
+      `<li class="scoreList1">${el.name} : Score(${el.answerCount})  -  Time: ${el.timeCount}</li>`
+    );
+  });
+};
 
-restartButton.addEventListener('click', function () {
-    restartGame()
-})
+const restartOption = () => {
+  $("#scoreOut").html("");
+  $(".resultDiv").toggleClass("hide");
+  $("#restartButton").toggleClass("hide");
+};
 
-// Refresh function for when the restart button is pressed
-var restartGame = function () {
-    console.log('Restart')
-    window.location = window.location
-    restartButton.classList.add('hide')
-}
-// Empty arrays used to store the names submitted from the users
-var names = []
-var scoreTotal = []
+$("#restartButton").on("click", () => {
+  $("#restartButton").toggleClass("hide");
+  count = 0;
+  startQuiz();
+  timer = setInterval(function () {
+    count += 1;
+    $(".timeDisplay").html("");
+    $(".timeDisplay").append(count);
+  }, 1000);
+});
 
-var scoreRecord = document.querySelector('#scoreRecord')
+const startQuiz = async () => {
+  baseQuestions.forEach((el) => {
+    questions.push(el);
+  });
+  answerCount = 0;
+  console.log("Started Quiz");
+  $(".startButton").addClass("hide");
+  $("#quizButtons").append(showQuestions(questionSelector()));
+};
 
-// Function ran when name was submitted by user, storing their names and the score, This part is incomplete currently
-var nameSubmit = $('#scoreRecord').click(function (event) {
-    event.preventDefault();
-    var submission = $('#nameInput').val()
-    if (submission == '') {
-        alert('Please Enter a name to proceed')
-    } else {
-        names.push(submission)
-        scoreTotal.push(currentScore)
-        $('.scoreList1').append(names + '' + ':' + currentScore)
-    }
-})
+$(".clearHighscores").click(async () => {
+  const remove = await localStorage.removeItem("Highscore");
+  await getStorage();
+});
